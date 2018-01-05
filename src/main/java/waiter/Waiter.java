@@ -154,6 +154,36 @@ public class Waiter {
         wait.until(elementIsDisplayed);
     }
 
+    /**
+     * Try to click on an element during the TIMEOUT number of seconds.
+     *
+     * @param element - the element to click on
+     * @param driver  - the WebDriver instance
+     */
+    public void click(WebElement element, WebDriver driver) {
+        click(element, driver, TIMEOUT);
+    }
+
+    /**
+     * Try to click on an element during the specifiedTimeout number of seconds.
+     *
+     * @param element          - the element to click on
+     * @param driver           - the WebDriver instance
+     * @param specifiedTimeout - amount of seconds you want to wait for
+     */
+    public void click(WebElement element, WebDriver driver, int specifiedTimeout) {
+        WebDriverWait wait = new WebDriverWait(driver, specifiedTimeout);
+        ExpectedCondition elementIsClickable = (ExpectedCondition<Boolean>) arg0 -> {
+            try {
+                element.click();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        };
+        wait.until(elementIsClickable);
+    }
+
     // URL wait methods
 
     /**
@@ -209,7 +239,6 @@ public class Waiter {
         wait.until(urlIsCorrect);
         waitForPageLoadComplete(driver, specifiedTimeout);
     }
-
 
     /**
      * Wait for an expected URL to load in the browser, but ignore the case of the url.
@@ -319,7 +348,7 @@ public class Waiter {
      * @param specifiedTimeout - amount of seconds you want to wait for
      */
     public void clickElementAndWaitForUrl(WebElement element, String url, WebDriver driver, int specifiedTimeout) {
-        element.click();
+        click(element, driver);
         waitForUrl(url, driver, specifiedTimeout);
     }
 
@@ -349,7 +378,7 @@ public class Waiter {
      */
     public void clickElementAndWaitForUrlContains(WebElement element, String expectedStringInUrl, WebDriver driver, int
             specifiedTimeout) {
-        element.click();
+        click(element, driver);
         waitForUrlContains(expectedStringInUrl, driver, specifiedTimeout);
     }
 
@@ -376,7 +405,7 @@ public class Waiter {
      */
     public void clickElementAndWaitForUrl_IgnoreCase(WebElement element, String url, WebDriver driver, int
             specifiedTimeout) {
-        element.click();
+        click(element, driver);
         waitForUrl_IgnoreCase(url, driver, specifiedTimeout);
     }
 
@@ -409,7 +438,7 @@ public class Waiter {
      */
     public void clickElementAndWaitForUrlContains_IgnoreCase(WebElement element, String expectedStringInUrl, WebDriver
             driver, int specifiedTimeout) {
-        element.click();
+        click(element, driver);
         waitForUrlContains_IgnoreCase(expectedStringInUrl, driver, specifiedTimeout);
     }
 
@@ -417,9 +446,9 @@ public class Waiter {
      * Click on a WebElement and wait for the URL in the browser to start with an expected String.
      * Wait for the TIMEOUT number of seconds.
      *
-     * @param element          - the WebElement to click on
-     * @param expectedString   - the String you expected the URL in the browser to start with
-     * @param driver           - the WebDriver instance
+     * @param element        - the WebElement to click on
+     * @param expectedString - the String you expected the URL in the browser to start with
+     * @param driver         - the WebDriver instance
      */
     public void clickElementAndWaitForUrlStartsWith(WebElement element, String expectedString, WebDriver
             driver) {
@@ -437,8 +466,34 @@ public class Waiter {
      */
     public void clickElementAndWaitForUrlStartsWith(WebElement element, String expectedString, WebDriver
             driver, int specifiedTimeout) {
-        element.click();
+        click(element, driver);
         waitForUrlStartsWith(expectedString, driver, specifiedTimeout);
+    }
+
+    /**
+     * Click on an element and wait for a page refresh. To be used when you want the same page to reload after
+     * clicking an element. For redirect to other pages, use wait for url methods.
+     * Wait for the TIMEOUT number of seconds.
+     *
+     * @param element          - the WebElement to click on
+     * @param driver           - the WebDriver instance
+     */
+    public void clickElementAndWaitForPageLoadComplete(WebElement element, WebDriver driver) {
+        clickElementAndWaitForPageLoadComplete(element, driver, TIMEOUT);
+    }
+
+    /**
+     * Click on an element and wait for a page refresh. To be used when you want the same page to reload after
+     * clicking an element. For redirect to other pages, use wait for url methods.
+     * Wait for the specifiedTimeout number of seconds.
+     *
+     * @param element          - the WebElement to click on
+     * @param driver           - the WebDriver instance
+     * @param specifiedTimeout - amount of seconds you want to wait for
+     */
+    public void clickElementAndWaitForPageLoadComplete(WebElement element, WebDriver driver, int specifiedTimeout) {
+        click(element, driver, specifiedTimeout);
+        waitForPageLoadComplete(driver, specifiedTimeout);
     }
 
 }
