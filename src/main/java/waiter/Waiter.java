@@ -173,7 +173,7 @@ public class Waiter {
      */
     public void click(WebElement element, WebDriver driver, int specifiedTimeout) {
         WebDriverWait wait = new WebDriverWait(driver, specifiedTimeout);
-        ExpectedCondition elementIsClickable = (ExpectedCondition<Boolean>) arg0 -> {
+        ExpectedCondition<Boolean> elementIsClickable = arg0 -> {
             try {
                 element.click();
                 return true;
@@ -182,6 +182,267 @@ public class Waiter {
             }
         };
         wait.until(elementIsClickable);
+    }
+
+    /**
+     * Method that first waits for an element to be displayed, then waits for the text on the element to equal an
+     * expected String.
+     * Compares the value resulted from getText() on the element with the expected String.
+     * No need to add a waitForElementDisplayed method call in the tests as that is included in this method.
+     * Will wait for up to the TIMEOUT number of seconds for the element to be displayed, then will wait for
+     * up to the TIMEOUT number of seconds for the text on the element to be the expected one.
+     *
+     * @param element        - the WebElement whose text will be compared to an expected value
+     * @param expectedString - the expected value of the WebElement's text
+     * @param driver         - the WebDriver instance
+     */
+    public void waitForElementTextEqualsString(WebElement element, String expectedString, WebDriver driver) {
+        waitForElementTextEqualsString(element, expectedString, driver, TIMEOUT);
+    }
+
+    /**
+     * Method that first waits for an element to be displayed, then waits for the text on the element to equal an
+     * expected String.
+     * Compares the value resulted from getText() on the element with the expected String.
+     * No need to add a waitForElementDisplayed method call in the tests as that is included in this method.
+     * Will wait for up to the specifiedTimeout number of seconds for the element to be displayed, then will wait for
+     * up to the specifiedTimeout number of seconds for the text on the element to be the expected one.
+     *
+     * @param element          - the WebElement whose text will be compared to an expected value
+     * @param expectedString   - the expected value of the WebElement's text
+     * @param driver           - the WebDriver instance
+     * @param specifiedTimeout - amount of seconds you want to wait for
+     */
+    public void waitForElementTextEqualsString(WebElement element, String expectedString, WebDriver driver, int
+            specifiedTimeout) {
+        WebDriverWait wait = new WebDriverWait(driver, specifiedTimeout);
+        waitForElementToBeDisplayed(element, driver, specifiedTimeout);
+        ExpectedCondition<Boolean> elementTextEqualsString = arg0 -> element.getText().equals(expectedString);
+        wait.until(elementTextEqualsString);
+    }
+
+    /**
+     * Method that first waits for an element to be displayed, then waits for the text on the element to equal an
+     * expected String but ignoring the case of the two.
+     * Compares the value resulted from getText() on the element with the expected String, but without taking into
+     * account the case of the two values.
+     * Therefore, for example 'tHis' and 'This' will be equal when calling this method.
+     * No need to add a waitForElementDisplayed method call in the tests as that is included in this method.
+     * Will wait for up to the TIMEOUT number of seconds for the element to be displayed, then will wait for
+     * up to the TIMEOUT number of seconds for the text on the element to be the expected one.
+     *
+     * @param element        - the WebElement whose text will be compared to an expected value
+     * @param expectedString - the expected value of the WebElement's text
+     * @param driver         - the WebDriver instance
+     */
+    public void waitForElementTextEqualsString_IgnoreCase(WebElement element, String expectedString, WebDriver driver) {
+        waitForElementTextEqualsString_IgnoreCase(element, expectedString, driver, TIMEOUT);
+    }
+
+    /**
+     * Method that first waits for an element to be displayed, then waits for the text on the element to equal an
+     * expected String but ignoring the case of the two.
+     * Compares the value resulted from getText() on the element with the expected String, but without taking into
+     * account the case of the two values.
+     * Therefore, for example 'tHis' and 'This' will be equal when calling this method.
+     * No need to add a waitForElementDisplayed method call in the tests as that is included in this method.
+     * Will wait for up to the specifiedTimeout number of seconds for the element to be displayed, then will wait for
+     * up to the specifiedTimeout number of seconds for the text on the element to be the expected one.
+     *
+     * @param element          - the WebElement whose text will be compared to an expected value
+     * @param expectedString   - the expected value of the WebElement's text
+     * @param driver           - the WebDriver instance
+     * @param specifiedTimeout - amount of seconds you want to wait for
+     */
+    public void waitForElementTextEqualsString_IgnoreCase(WebElement element, String expectedString, WebDriver driver,
+                                                          int
+                                                                  specifiedTimeout) {
+        WebDriverWait wait = new WebDriverWait(driver, specifiedTimeout);
+        waitForElementToBeDisplayed(element, driver, specifiedTimeout);
+        ExpectedCondition<Boolean> elementTextEqualsString = arg0 -> element.getText().equalsIgnoreCase(expectedString);
+        wait.until(elementTextEqualsString);
+    }
+
+    /**
+     * Method that first waits for an element to be displayed, then waits for the text on the element (whose
+     * whitespaces are removed) to equal an expected String (whose whitespaces are also removed).
+     * Basically, does a getText() on the WebElement, removes all whitespaces from this resulting String, then compares
+     * this value to another String that contains no whitespaces.
+     * Whitespaces include: space, new line, tab.
+     * Having said that, only the non whitespace characters are compared.
+     * When calling the method, the expectedString can contain whitespaces, as they are removed inside this method.
+     * Therefore, 'this      string  here' will equal 'this string here'.
+     * No need to add a waitForElementDisplayed method call in the tests as that is included in this method.
+     * Will wait for up to the TIMEOUT number of seconds for the element to be displayed, then will wait for
+     * up to the TIMEOUT number of seconds for the text on the element to be the expected one.
+     *
+     * @param element        - the WebElement whose text will be compared to an expected value after removing the
+     *                       whitespaces on this text
+     * @param expectedString - the expected value of the WebElement's text on which a whitespace removal is also done
+     * @param driver         - the WebDriver instance
+     */
+    public void waitForElementTextEqualsString_IgnoreWhitespaces(WebElement element, String expectedString, WebDriver
+            driver) {
+        waitForElementTextEqualsString_IgnoreWhitespaces(element, expectedString, driver, TIMEOUT);
+    }
+
+    /**
+     * Method that first waits for an element to be displayed, then waits for the text on the element (whose
+     * whitespaces are removed) to equal an expected String (whose whitespaces are also removed).
+     * Basically, does a getText() on the WebElement, removes all whitespaces from this resulting String, then compares
+     * this value to another String that contains no whitespaces.
+     * Whitespaces include: space, new line, tab.
+     * When calling the method, the expectedString can contain whitespaces, as they are removed inside this method.
+     * Therefore, 'this      string  here' will equal 'this string here'.
+     * No need to add a waitForElementDisplayed method call in the tests as that is included in this method.
+     * Will wait for up to the specifiedTimeout number of seconds for the element to be displayed, then will wait for
+     * up to the specifiedTimeout number of seconds for the text on the element to be the expected one.
+     *
+     * @param element          - the WebElement whose text will be compared to an expected value after removing the
+     *                         whitespaces on this text
+     * @param expectedString   - the expected value of the WebElement's text on which a whitespace removal is also done
+     * @param driver           - the WebDriver instance
+     * @param specifiedTimeout - amount of seconds you want to wait for
+     */
+    public void waitForElementTextEqualsString_IgnoreWhitespaces(WebElement element, String expectedString, WebDriver
+            driver, int specifiedTimeout) {
+        WebDriverWait wait = new WebDriverWait(driver, specifiedTimeout);
+        waitForElementToBeDisplayed(element, driver, specifiedTimeout);
+        ExpectedCondition<Boolean> elementTextEqualsString = arg0 -> element.getText().replaceAll("\\s", "").equals
+                (expectedString.replaceAll("\\s", ""));
+        wait.until(elementTextEqualsString);
+    }
+
+    /**
+     * /**
+     * Method that first waits for an element to be displayed, then waits for the text on the element to contain an
+     * expected String.
+     * Checks whether the value resulted from getText() on the element contains the expected String.
+     * No need to add a waitForElementDisplayed method call in the tests as that is included in this method.
+     * Will wait for up to the TIMEOUT number of seconds for the element to be displayed, then will wait for
+     * up to the TIMEOUT number of seconds for the text on the element to contain the expected one.
+     *
+     * @param element        - the WebElement whose text will be checked
+     * @param expectedString - the value expected to be contained in the WebElement's text
+     * @param driver         - the WebDriver instance
+     */
+    public void waitForElementTextContainsString(WebElement element, String expectedString, WebDriver driver) {
+        waitForElementTextContainsString(element, expectedString, driver, TIMEOUT);
+    }
+
+    /**
+     * Method that first waits for an element to be displayed, then waits for the text on the element to contain an
+     * expected String.
+     * Checks whether the value resulted from getText() on the element contains the expected String.
+     * No need to add a waitForElementDisplayed method call in the tests as that is included in this method.
+     * Will wait for up to the specifiedTimeout number of seconds for the element to be displayed, then will wait for
+     * up to the specifiedTimeout number of seconds for the text on the element to contain the expected one.
+     *
+     * @param element          - the WebElement whose text will be checked
+     * @param expectedString   - the value expected to be contained in the WebElement's text
+     * @param driver           - the WebDriver instance
+     * @param specifiedTimeout - amount of seconds you want to wait for
+     */
+    public void waitForElementTextContainsString(WebElement element, String expectedString, WebDriver driver, int
+            specifiedTimeout) {
+        WebDriverWait wait = new WebDriverWait(driver, specifiedTimeout);
+        waitForElementToBeDisplayed(element, driver, specifiedTimeout);
+        ExpectedCondition<Boolean> elementTextContainsString = arg0 -> element.getText().contains(expectedString);
+        wait.until(elementTextContainsString);
+    }
+
+    /**
+     * Method that first waits for an element to be displayed, then waits for the text on the element to contain an
+     * expected String but ignoring the case of the two.
+     * Checks whether the value resulted from getText() on the element contains the expected String, but without taking
+     * into account the case of the two values.
+     * Therefore, for example 'tHis' will contain 'his'.
+     * No need to add a waitForElementDisplayed method call in the tests as that is included in this method.
+     * Will wait for up to the TIMEOUT number of seconds for the element to be displayed, then will wait for
+     * up to the TIMEOUT number of seconds for the text on the element to contain the expected one.
+     *
+     * @param element        - the WebElement whose text will be checked
+     * @param expectedString - the value expected to be part of the WebElement's text, ignoring the case
+     * @param driver         - the WebDriver instance
+     */
+    public void waitForElementTextContainsString_IgnoreCase(WebElement element, String expectedString, WebDriver
+            driver) {
+        waitForElementTextContainsString_IgnoreCase(element, expectedString, driver, TIMEOUT);
+    }
+
+    /**
+     * Method that first waits for an element to be displayed, then waits for the text on the element to contain an
+     * expected String but ignoring the case of the two.
+     * Checks whether the value resulted from getText() on the element contains the expected String, but without taking
+     * into account the case of the two values.
+     * Therefore, for example 'tHis' will contain 'his'.
+     * No need to add a waitForElementDisplayed method call in the tests as that is included in this method.
+     * Will wait for up to the specifiedTimeout number of seconds for the element to be displayed, then will wait for
+     * up to the specifiedTimeout number of seconds for the text on the element to be the expected one.
+     *
+     * @param element          - the WebElement whose text will be checked
+     * @param expectedString   - the value expected to be part of the WebElement's text, ignoring the case
+     * @param driver           - the WebDriver instance
+     * @param specifiedTimeout - amount of seconds you want to wait for
+     */
+    public void waitForElementTextContainsString_IgnoreCase(WebElement element, String expectedString, WebDriver driver,
+                                                            int specifiedTimeout) {
+        WebDriverWait wait = new WebDriverWait(driver, specifiedTimeout);
+        waitForElementToBeDisplayed(element, driver, specifiedTimeout);
+        ExpectedCondition<Boolean> elementTextContainsString = arg0 -> element.getText().toLowerCase().contains
+                (expectedString.toLowerCase());
+        wait.until(elementTextContainsString);
+    }
+
+    /**
+     * Method that first waits for an element to be displayed, then waits for the text on the element (whose
+     * whitespaces are removed) to contain an expected String (whose whitespaces are also removed).
+     * Basically, does a getText() on the WebElement, removes all whitespaces from this resulting String, then checks
+     * that this value contains another String that has no whitespaces.
+     * Whitespaces include: space, new line, tab.
+     * When calling the method, the expectedString can contain whitespaces, as they are removed inside this method.
+     * Therefore, 'this      string  here' will contain 'str  ing here'.
+     * No need to add a waitForElementDisplayed method call in the tests as that is included in this method.
+     * Will wait for up to the TIMEOUT number of seconds for the element to be displayed, then will wait for
+     * up to the TIMEOUT number of seconds for the text on the element to be the expected one.
+     *
+     * @param element        - the WebElement whose text will be compared to an expected value after removing the
+     *                       whitespaces on this text
+     * @param expectedString - the value expected to be part of the WebElement's text on which a whitespace removal is
+     *                       also done
+     * @param driver         - the WebDriver instance
+     */
+    public void waitForElementTextContainsString_IgnoreWhitespaces(WebElement element, String expectedString, WebDriver
+            driver) {
+        waitForElementTextContainsString_IgnoreWhitespaces(element, expectedString, driver, TIMEOUT);
+    }
+
+    /**
+     * Method that first waits for an element to be displayed, then waits for the text on the element (whose
+     * whitespaces are removed) to contain an expected String (whose whitespaces are also removed).
+     * Basically, does a getText() on the WebElement, removes all whitespaces from this resulting String, then checks
+     * that this value contains another String that has no whitespaces.
+     * Whitespaces include: space, new line, tab.
+     * When calling the method, the expectedString can contain whitespaces, as they are removed inside this method.
+     * Therefore, 'this      string  here' will contain 'str  ing here'.
+     * No need to add a waitForElementDisplayed method call in the tests as that is included in this method.
+     * Will wait for up to the specifiedTimeout number of seconds for the element to be displayed, then will wait for
+     * up to the specifiedTimeout number of seconds for the text on the element to be the expected one.
+     *
+     * @param element          - the WebElement whose text will be compared to an expected value after removing the
+     *                         whitespaces on this text
+     * @param expectedString   - the value expected to be part of the WebElement's text on which a whitespace removal is
+     *                         also done
+     * @param driver           - the WebDriver instance
+     * @param specifiedTimeout - amount of seconds you want to wait for
+     */
+    public void waitForElementTextContainsString_IgnoreWhitespaces(WebElement element, String expectedString, WebDriver
+            driver, int specifiedTimeout) {
+        WebDriverWait wait = new WebDriverWait(driver, specifiedTimeout);
+        waitForElementToBeDisplayed(element, driver, specifiedTimeout);
+        ExpectedCondition<Boolean> elementTextContainsString = arg0 -> element.getText().replaceAll("\\s", "").contains
+                (expectedString.replaceAll("\\s", ""));
+        wait.until(elementTextContainsString);
     }
 
     // URL wait methods
@@ -300,6 +561,8 @@ public class Waiter {
 
     /**
      * Wait for the URL in the browser to start with a specified String.
+     * Please see the startsWith method from the String class for details on how this method determines whether a
+     * String starts with another one.
      * Wait for the TIMEOUT number of seconds.
      *
      * @param expectedString - the expected String to be found at the start of the URL loaded in the browser
@@ -311,6 +574,8 @@ public class Waiter {
 
     /**
      * Wait for the URL in the browser to start with a specified String.
+     * Please see the startsWith method from the String class for details on how this method determines whether a
+     * String starts with another one.
      * Wait for the specifiedTimeout number of seconds.
      *
      * @param expectedString   - the expected String to be found at the start of the URL loaded in the browser
@@ -475,8 +740,8 @@ public class Waiter {
      * clicking an element. For redirect to other pages, use wait for url methods.
      * Wait for the TIMEOUT number of seconds.
      *
-     * @param element          - the WebElement to click on
-     * @param driver           - the WebDriver instance
+     * @param element - the WebElement to click on
+     * @param driver  - the WebDriver instance
      */
     public void clickElementAndWaitForPageLoadComplete(WebElement element, WebDriver driver) {
         clickElementAndWaitForPageLoadComplete(element, driver, TIMEOUT);
@@ -495,5 +760,6 @@ public class Waiter {
         click(element, driver, specifiedTimeout);
         waitForPageLoadComplete(driver, specifiedTimeout);
     }
+
 
 }
