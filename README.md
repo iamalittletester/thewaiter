@@ -1,8 +1,7 @@
-# thewaiter 
+# thewaiter - A Waiter library for Selenium tests.
 
-### Travis CI [![Build Status](https://travis-ci.org/iamalittletester/thewaiter.svg?branch=master)](https://travis-ci.org/iamalittletester/thewaiter)
+### Travis CI: [![Build Status](https://travis-ci.org/iamalittletester/thewaiter.svg?branch=master)](https://travis-ci.org/iamalittletester/thewaiter) Javadoc: [![Javadocs](http://javadoc.io/badge/com.imalittletester/thewaiter.svg)](http://javadoc.io/doc/com.imalittletester/thewaiter)
 
-A Waiter library for Selenium tests.
 
 ## Purpose
 The purpose for this library is to help write reliable Selenium tests by using WebDriverWait based methods to wait for a wide range of page events.
@@ -62,7 +61,7 @@ In the test itself, just call the method you need from the Waiter class. Some ex
 ```
 When the method you use from the library requires a WebElement to be passed to the method call, make sure you define the WebElement in a PageObject class, not as "driver.findElement()" directly in the method call, as the latter will not work. 
 
-Make sure to read the Javadoc of the methods you want to use.
+Make sure to read the Javadoc of the methods you want to use: http://javadoc.io/doc/com.imalittletester/thewaiter.
 
 ## Further reading
 I will write some posts with examples of how to use the library on my blog (https://imalittletester.com/category/waiter/).
