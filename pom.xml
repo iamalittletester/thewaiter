@@ -7,7 +7,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>The Waiter</name>
+    <name>The waiter</name>
     <description>A library for writing reliable tests with Selenium</description>
     <url>https://github.com/iamalittletester/thewaiter</url>
 

@@ -1,11 +1,11 @@
-# thewaiter - A Waiter library for Selenium tests.
+# thewaiter - A waiter library for Selenium tests.
 
 ### Travis CI: [![Build Status](https://travis-ci.org/iamalittletester/thewaiter.svg?branch=master)](https://travis-ci.org/iamalittletester/thewaiter) Javadoc: [![Javadocs](http://javadoc.io/badge/com.imalittletester/thewaiter.svg)](http://javadoc.io/doc/com.imalittletester/thewaiter)
 
 
 ## Purpose
 The purpose for this library is to help write reliable Selenium tests by using WebDriverWait based methods to wait for a wide range of page events.
-It contains a class called Waiter, which holds all the wait based methods. Some examples of what you can wait for by using this library:
+It contains a class called waiter, which holds all the wait based methods. Some examples of what you can wait for by using this library:
   * page load complete
   * URLs to load in browser, with variations: the URL to wait for equals, contains an expected String; ignores or cares about the case of the URL and expected String
   * opening a URL in the browser and waiting for: the page load complete, a URL to load or a webElement to be displayed
@@ -36,33 +36,33 @@ In order to import the library into your Maven project, in the `<dependencies>` 
      </exclusions>
  </dependency>
   ```
-  The Waiter library has Selenium as a dependency, so in order to avoid dependency management issues, the "exclusion" section needs to be added. This way, you can control from your own dependency the Selenium version you want to import into your project.
+  The waiter library has Selenium as a dependency, so in order to avoid dependency management issues, the "exclusion" section needs to be added. This way, you can control from your own dependency the Selenium version you want to import into your project.
   
-## Using Waiter in your tests
-After you imported the library as a dependency, you can start creating the tests that will use it. In the class where you will use it, you first need to import the Waiter class, as follows:
+## Using waiter in your tests
+After you imported the library as a dependency, you can start creating the tests that will use it. In the class where you will use it, you first need to import the waiter class, as follows:
 ```java
-import waiter.Waiter;
+import waiter.waiter;
 ```
 Then, you need to instantiate it:
 ```java
-private Waiter Waiter = new Waiter();
+private waiter waiter = new waiter();
 ```
-In the test itself, just call the method you need from the Waiter class. Some examples:
+In the test itself, just call the method you need from the waiter class. Some examples:
 ```java
- Waiter.get(theUrl, theDriverInstance);
+ waiter.get(theUrl, theDriverInstance);
 
- Waiter.waitForElementTextEqualsString(webElement, expectedString, theDriverInstance);
+ waiter.waitForElementTextEqualsString(webElement, expectedString, theDriverInstance);
 
- Waiter.waitForElementAttributeContainsString(webElement, theAttribute, expectedString, theDriverInstance, 10);
+ waiter.waitForElementAttributeContainsString(webElement, theAttribute, expectedString, theDriverInstance, 10);
 
- Waiter.click(webElement, theDriverInstance);
+ waiter.click(webElement, theDriverInstance);
  
- Waiter.clickElementAndWaitForUrlContains(webElement, expectedString, theDriverInstance);
+ waiter.clickElementAndWaitForUrlContains(webElement, expectedString, theDriverInstance);
 ```
 When the method you use from the library requires a WebElement to be passed to the method call, make sure you define the WebElement in a PageObject class, not as "driver.findElement()" directly in the method call, as the latter will not work. 
 
 Make sure to read the Javadoc of the methods you want to use: http://javadoc.io/doc/com.imalittletester/thewaiter.
 
 ## Further reading
-I will write some posts with examples of how to use the library on my blog (https://imalittletester.com/category/Waiter/).
+I will write some posts with examples of how to use the library on my blog (https://imalittletester.com/category/waiter/).
 There will also be test examples in another GitHub repo i am working on (https://github.com/iamalittletester/learning-project/tree/master/src/test/java/waitertests).
