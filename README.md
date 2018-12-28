@@ -21,7 +21,7 @@ It contains a class called waiter, which holds all the wait based methods. Some 
 The library was uploaded to the official Maven repository and can be found here: https://mvnrepository.com/artifact/com.imalittletester/thewaiter 
 
 
-## Importing into your test project
+## Importing into your TestWaiter project
 In order to import the library into your Maven project, in the `<dependencies>` section, add the following dependency:
 ```java
  <dependency>
@@ -47,7 +47,7 @@ Then, you need to instantiate it:
 ```java
 private waiter waiter = new waiter();
 ```
-In the test itself, just call the method you need from the waiter class. Some examples:
+In the TestWaiter itself, just call the method you need from the waiter class. Some examples:
 ```java
  waiter.get(theUrl, theDriverInstance);
 
@@ -65,4 +65,4 @@ Make sure to read the Javadoc of the methods you want to use: http://javadoc.io/
 
 ## Further reading
 I will write some posts with examples of how to use the library on my blog (https://imalittletester.com/category/waiter/).
-There will also be test examples in another GitHub repo i am working on (https://github.com/iamalittletester/learning-project/tree/master/src/test/java/waitertests).
+There will also be TestWaiter examples in another GitHub repo i am working on (https://github.com/iamalittletester/learning-project/tree/master/src/TestWaiter/java/waitertests).
